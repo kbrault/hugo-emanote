@@ -8,7 +8,7 @@
             src="{{ (site.Params.iconUrl | default "favicon.svg") | relURL }}" alt="Site icon" />
         </a>
         <a class="font-semibold text-base truncate hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-          title="Go to Home" href="{{ "/" | relLangURL }}">{{ site.Title }}</a>
+          title="Go to Home" href="{{ .Site.Home.RelPermalink }}">{{ site.Title }}</a>
       </div>
 
       <div id="indexing-links" class="flex flex-row space-x-2 text-gray-500 dark:text-gray-400 flex-shrink-0">
