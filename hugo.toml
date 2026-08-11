@@ -1,7 +1,7 @@
 baseURL = "https://example.com/"
 languageCode = "en-us"
 title = "My Notes"
-# theme = "emanote-hugo"
+# theme = "hugo-emanote"
 
 # Enables the built-in JSON output on the home page — the theme's
 # client-side Ctrl+K search reads it from /index.json.
