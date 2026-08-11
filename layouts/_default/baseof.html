@@ -76,6 +76,7 @@
   <script defer src="{{ "js/toc-spy.js" | relURL }}"></script>
   <script defer src="{{ "js/code-copy.js" | relURL }}"></script>
   <script defer src="{{ "js/note-focus.js" | relURL }}"></script>
+  <script>window.emanoteSearchIndexUrl = "{{ "index.json" | relURL }}";</script>
   <script defer src="{{ "js/search.js" | relURL }}"></script>
   {{ block "scripts" . }}{{ end }}
 </body>
