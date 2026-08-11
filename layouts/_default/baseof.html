@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Locale | default "en" }}">
+
+<head>
+  {{ partial "head.html" . }}
+</head>
+
+{{/* Toggle these per-page via front matter, e.g.:
+       sidebar: false
+       toc: false
+     Defaults come from hugo.toml [params]. */}}
+{{ $showSidebar := .Params.sidebar | default site.Params.sidebar.enable | default true }}
+{{ $showBreadcrumbs := .Params.breadcrumbs | default site.Params.breadcrumbs.enable | default true }}
+{{ $showTOC := and (not .IsHome) (.Params.toc | default site.Params.toc.enable | default true) (gt (len .Fragments.Headings) 0) }}
+{{ $related := where (site.RegularPages.Related .) "Permalink" "!=" .Permalink }}
+{{ $related := $related | first (site.Params.relatedCount | default 5) }}
+{{ $hasRightPanel := or $showTOC (gt (len $related) 0) }}
+
+<body class="bg-gray-200 dark:bg-black text-gray-900 dark:text-gray-50 overflow-y-scroll">
+  <div class="container mx-auto 2xl:max-w-[100rem] {{ if $showSidebar }}mt-2 md:mt-8{{ else }}mt-2 md:mt-8{{ end }}">
+
+    {{ if $showBreadcrumbs }}{{ partial "breadcrumbs.html" . }}{{ end }}
+
+    <div id="page-card"
+      class="flex flex-col bg-white dark:bg-gray-900 md:shadow-md md:rounded-lg md:mb-8 md:border md:border-gray-200 dark:md:border-gray-800">
+
+      {{ partial "note-title.html" . }}
+
+      <div class="flex flex-col md:flex-row">
+        {{ if $showSidebar }}{{ partial "sidebar.html" . }}{{ end }}
+
+        <div id="note-column" data-focus-main class="relative flex-1 min-w-0 bg-white dark:bg-gray-800">
+          <main class="relative px-6 py-8 max-w-7xl mx-auto">
+            {{ if $showSidebar }}
+            <div data-focus-hide class="hidden md:block absolute top-4 right-4 z-10">
+              <button type="button" data-focus-toggle
+                class="p-2 rounded-md text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary-600 dark:hover:text-primary-400 transition-colors cursor-pointer"
+                title="Maximize note area" aria-label="Maximize note area" aria-pressed="false">
+                <span data-focus-icon="maximize" aria-hidden="true">
+                  <svg class="w-[1.125rem] h-[1.125rem]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 3H5a2 2 0 00-2 2v3m0 8v3a2 2 0 002 2h3m8-18h3a2 2 0 012 2v3m0 8v3a2 2 0 01-2 2h-3" />
+                  </svg>
+                </span>
+                <span data-focus-icon="restore" aria-hidden="true" hidden>
+                  <svg class="w-[1.125rem] h-[1.125rem]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9H5m0 0V5m0 4l5-5m5 5h4m0 0V5m0 4l-5-5M9 15H5m0 0v4m0-4l5 5m5-5h4m0 0v4m0-4l-5 5" />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            {{ end }}
+
+            {{ block "main" . }}{{ end }}
+
+            {{ partial "tags.html" . }}
+          </main>
+        </div>
+
+        {{ if $hasRightPanel }}{{ partial "right-panel.html" (dict "page" . "showTOC" $showTOC "related" $related) }}{{ end }}
+      </div>
+
+      {{ if and (not $showTOC) (gt (len $related) 0) }}
+      <div data-focus-hide class="px-6 pb-8 md:hidden">
+        {{ partial "related-list.html" (dict "page" . "related" $related "variant" "full") }}
+      </div>
+      {{ end }}
+
+      {{ partial "site-footer.html" . }}
+    </div>
+  </div>
+
+  {{ partial "search-modal.html" . }}
+
+  <script defer src="{{ "js/theme-toggle.js" | relURL }}"></script>
+  <script defer src="{{ "js/sidebar-tree.js" | relURL }}"></script>
+  <script defer src="{{ "js/toc-spy.js" | relURL }}"></script>
+  <script defer src="{{ "js/code-copy.js" | relURL }}"></script>
+  <script defer src="{{ "js/note-focus.js" | relURL }}"></script>
+  <script defer src="{{ "js/search.js" | relURL }}"></script>
+  {{ block "scripts" . }}{{ end }}
+</body>
+
+</html>

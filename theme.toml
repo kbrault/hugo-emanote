@@ -1,0 +1,11 @@
+name = "hugo-emanote"
+license = "MIT"
+licenselink = "https://github.com/kbrault/hugo-emanote/blob/main/LICENSE"
+description = "A Hugo theme reproducing the look & feel of the default Emanote (emanote.srid.ca) theme: card layout, sidebar note-tree, right-panel TOC, tinted note-title strip, and a Lora/Mona Sans/Space Mono type system with a configurable Tailwind primary palette and light/dark mode."
+homepage = "https://github.com/kbrault/hugo-emanote/"
+features = ["dark-mode", "sidebar-tree", "table-of-contents", "breadcrumbs", "tags", "callouts", "search"]
+min_version = "0.121.0"
+
+[author]
+  name = "kbrault"
+  homepage = "https://github.com/kbrault/"

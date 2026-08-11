@@ -1,0 +1,14 @@
+{{ $ctx := . }}
+{{ range $ctx.headings }}
+<li class="truncate" title="{{ .Title | plainify }}">
+  <a href="{{ $ctx.page.RelPermalink }}#{{ .ID }}" data-toc-target="{{ .ID }}"
+    class="toc-link block rounded-md px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">
+    {{ .Title | plainify }}
+  </a>
+  {{ with .Headings }}
+  <ul class="space-y-1 ml-3 mt-1">
+    {{ partial "toc-walk.html" (dict "headings" . "page" $ctx.page) }}
+  </ul>
+  {{ end }}
+</li>
+{{ end }}

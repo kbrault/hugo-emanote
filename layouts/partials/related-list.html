@@ -1,0 +1,35 @@
+{{ $variant := .variant }}
+{{ $related := .related }}
+
+{{ if eq $variant "margin" }}
+<div id="related-margin">
+  <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3 px-2">Related</h3>
+  <ul class="space-y-0.5 text-sm">
+    {{ range $related }}
+    <li>
+      <a class="block py-1 px-2 rounded-sm bg-primary-50/70 dark:bg-primary-950/50 text-primary-600 dark:text-primary-300 font-semibold tracking-tight hover:bg-primary-100/80 dark:hover:bg-primary-900/70 transition-colors truncate"
+        href="{{ .RelPermalink }}" title="{{ .LinkTitle }}">
+        <span class="text-primary-400 dark:text-primary-700 mr-1.5 select-none" aria-hidden="true">&larr;</span>{{ .LinkTitle }}
+      </a>
+    </li>
+    {{ end }}
+  </ul>
+</div>
+{{ else }}
+<section id="related-bottom" class="mt-8 border-t border-gray-200 dark:border-gray-800 pt-4">
+  <header class="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Related</header>
+  <ul class="divide-y divide-gray-200 dark:divide-gray-800 text-sm">
+    {{ range $related }}
+    <li class="group py-3 first:pt-0 last:pb-0">
+      <a class="inline-block bg-primary-50/70 dark:bg-primary-950/50 text-primary-600 dark:text-primary-300 font-semibold tracking-tight px-2 py-0.5 rounded-sm hover:bg-primary-100/80 dark:hover:bg-primary-900/70 transition-colors"
+        href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+      {{ with .Summary }}
+      <div class="mt-2 ml-2 pl-3 border-l-2 border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-400 line-clamp-2">
+        {{ . | plainify | truncate 160 }}
+      </div>
+      {{ end }}
+    </li>
+    {{ end }}
+  </ul>
+</section>
+{{ end }}

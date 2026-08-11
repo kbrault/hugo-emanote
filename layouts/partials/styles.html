@@ -1,0 +1,235 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/mona-sans@5/index.min.css">
+
+<link rel="stylesheet" href="{{ "css/chroma.css" | relURL }}">
+<style>
+  :root {
+    --icon-external: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><g style="stroke:black;stroke-width:1;fill:none"><line x1="5" y1="5" x2="5" y2="14"/><line x1="14" y1="9" x2="14" y2="14"/><line x1="5" y1="14" x2="14" y2="14"/><line x1="5" y1="5" x2="9" y2="5"/><line x1="10" y1="2" x2="17" y2="2"/><line x1="17" y1="2" x2="17" y2="9"/><line x1="10" y1="9" x2="17" y2="2"/></g></svg>');
+    --icon-mail: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="black" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>');
+  }
+
+  body {
+    font-family: var(--font-serif);
+    line-height: 1.7;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans);
+    line-height: 1.2;
+  }
+  h1, h2, h3, h4 { letter-spacing: -0.02em; }
+
+  #sidebar, #breadcrumbs, #toc, #site-footer, #right-panel, #note-title,
+  .callout-title, .chrome-font {
+    font-family: var(--font-sans);
+  }
+
+  code, pre, kbd, samp, .font-mono { font-family: var(--font-mono); }
+
+  /* Standalone prose images (an <img> alone in its own paragraph) get a
+     subtle frame; inline images stay unstyled. */
+  #note-body p > img:only-child {
+    display: block;
+    margin: 1rem auto;
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.375rem;
+    border: 1px solid var(--color-gray-200);
+  }
+  .dark #note-body p > img:only-child { border-color: var(--color-gray-800); }
+
+  /* Prose element defaults — Goldmark emits plain HTML with no
+     classes, so these are styled by element, scoped to #note-body. */
+  #note-body p { margin-bottom: 1rem; line-height: 1.75; }
+
+  #note-body blockquote {
+    padding: 0.75rem 1.5rem;
+    margin: 0 0 1.5rem;
+    font-style: italic;
+    border-left: 4px solid var(--color-gray-300);
+    background-color: var(--color-gray-50);
+    color: var(--color-gray-700);
+    border-radius: 0 0.5rem 0.5rem 0;
+  }
+  .dark #note-body blockquote {
+    border-left-color: var(--color-gray-700);
+    background-color: var(--color-gray-900);
+    color: var(--color-gray-300);
+  }
+
+  #note-body ul { margin: 1rem 0 1rem 1.5rem; list-style: disc; }
+  #note-body ol { margin: 1rem 0 1rem 1.5rem; list-style: decimal; }
+  #note-body ul, #note-body ol { line-height: 1.75; }
+  #note-body li { margin: 0.35rem 0; }
+  #note-body ul > li::marker { color: var(--color-gray-400); }
+  .dark #note-body ul > li::marker { color: var(--color-gray-500); }
+  #note-body ol > li::marker { font-weight: 600; color: var(--color-primary-600); }
+  .dark #note-body ol > li::marker { color: var(--color-primary-400); }
+  #note-body li > ul, #note-body li > ol { margin-top: 0.25rem; margin-bottom: 0.25rem; }
+
+  #note-body hr {
+    margin: 2rem 0;
+    border-color: var(--color-gray-200);
+  }
+  .dark #note-body hr { border-color: var(--color-gray-800); }
+
+  /* GFM task lists (goldmark "tasklist" extension). */
+  #note-body li.task-list-item { list-style: none; margin-left: -1.5rem; padding-left: 1.5rem; position: relative; }
+  #note-body li.task-list-item input[type="checkbox"] {
+    position: absolute;
+    left: 0;
+    top: 0.4em;
+    accent-color: var(--color-primary-600);
+    width: 0.9em;
+    height: 0.9em;
+  }
+
+  #note-body dl { display: flex; flex-direction: column; margin-bottom: 0.75rem; }
+  #note-body dt { font-weight: 700; font-size: 1.125rem; }
+  #note-body dd {
+    padding-left: 0.5rem;
+    margin: 0.25rem 0 0.75rem 0.25rem;
+    border-left: 2px solid var(--color-gray-300);
+    color: var(--color-gray-700);
+  }
+  .dark #note-body dd { border-left-color: var(--color-gray-600); color: var(--color-gray-300); }
+
+  #note-body code:not(pre code) {
+    padding: 0 0.35rem;
+    background-color: var(--color-gray-100);
+    color: var(--color-gray-900);
+    border-radius: 0.25rem;
+    font-size: 0.9em;
+  }
+  .dark #note-body code:not(pre code) { background-color: var(--color-gray-800); color: var(--color-gray-100); }
+
+  #note-body pre {
+    position: relative;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+    padding: 1rem 1.25rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    background-color: var(--color-gray-900);
+    border: 1px solid var(--color-gray-800);
+  }
+  .dark #note-body pre { background-color: black; border-color: var(--color-gray-800); }
+  #note-body pre code { background: none; padding: 0; display: block; line-height: 1.6; }
+
+  /* Tables — GitHub-style: no vertical rules, header bottom rule, row hover. */
+  #note-body table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.95rem; }
+  #note-body thead { border-bottom: 2px solid var(--color-gray-200); text-align: left; }
+  #note-body thead th { padding: 0.5rem 0.75rem; font-weight: 600; color: var(--color-gray-900); letter-spacing: -0.01em; }
+  #note-body tbody tr { border-bottom: 1px solid var(--color-gray-100); }
+  #note-body tbody tr:hover { background-color: var(--color-gray-50); }
+  #note-body tbody td { padding: 0.5rem 0.75rem; vertical-align: top; }
+  .dark #note-body thead { border-bottom-color: var(--color-gray-700); }
+  .dark #note-body thead th { color: var(--color-gray-100); }
+  .dark #note-body tbody tr { border-bottom-color: var(--color-gray-800); }
+  .dark #note-body tbody tr:hover { background-color: rgb(255 255 255 / 0.03); }
+
+  kbd {
+    background-color: var(--color-gray-100);
+    border: 1px solid var(--color-gray-300);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    color: var(--color-gray-800);
+    display: inline-block;
+    font-size: 0.85em;
+    line-height: 1.2;
+    padding: 2px 6px;
+    white-space: nowrap;
+  }
+  .dark kbd { background-color: var(--color-gray-800); border-color: var(--color-gray-700); color: var(--color-gray-100); }
+
+  /* External / mail link glyphs, drawn with mask-image so they inherit currentColor. */
+  a[data-linkicon]::after {
+    content: "";
+    display: inline-block;
+    width: 0.7em;
+    height: 0.7em;
+    margin-left: 0.15em;
+    position: absolute;
+    top: 0.3em;
+    vertical-align: baseline;
+    background-color: currentColor;
+    opacity: 0.55;
+    -webkit-mask: var(--icon-external) no-repeat center / contain;
+    mask: var(--icon-external) no-repeat center / contain;
+  }
+  a[data-linkicon="mail"]::after {
+    width: 0.9em; height: 0.9em;
+    -webkit-mask: var(--icon-mail) no-repeat center / contain;
+    mask: var(--icon-mail) no-repeat center / contain;
+  }
+
+  /* Table of contents — each nested depth gets progressively smaller
+     and more muted so a long TOC stays scannable at a glance. */
+  #toc ul a.toc-link { font-size: 0.875rem; font-weight: 500; color: var(--color-gray-700); }
+  .dark #toc ul a.toc-link { color: var(--color-gray-300); }
+  #toc ul ul a.toc-link { font-size: 0.8125rem; font-weight: 400; color: var(--color-gray-600); }
+  .dark #toc ul ul a.toc-link { color: var(--color-gray-400); }
+  #toc ul ul ul a.toc-link { font-size: 0.78125rem; color: var(--color-gray-500); }
+  #toc a.toc-link.toc-active {
+    font-weight: 600 !important;
+    background-color: var(--color-gray-100) !important;
+    color: var(--color-gray-900) !important;
+  }
+  .dark #toc a.toc-link.toc-active {
+    background-color: var(--color-gray-800) !important;
+    color: var(--color-gray-100) !important;
+  }
+
+  /* Callout shortcode foldable state */
+  details.callout-foldable > summary { list-style: none; }
+  details.callout-foldable > summary::-webkit-details-marker { display: none; }
+  details.callout-foldable[open] > summary .callout-fold-marker svg { transform: rotate(180deg); }
+
+  /* Link & focus polish */
+  #note-body a { text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Code-copy button */
+  .code-copy-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.4rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 0.375rem;
+    color: #e5e7eb;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s ease, background-color 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .code-copy-button svg { width: 1rem; height: 1rem; }
+  pre:hover .code-copy-button { opacity: 1; }
+  .code-copy-button:hover { background: rgba(255,255,255,0.2); }
+  .code-copy-button:active { transform: scale(0.95); }
+
+  /* Note-focus (maximize) mode */
+  html.note-focus [data-focus-hide] { display: none !important; }
+  html.note-focus [data-focus-main] { flex-basis: 100%; width: 100%; }
+  html.note-focus [data-focus-main] > main { max-width: none; }
+
+  /* Slim scrollbars for the sidebar / TOC columns */
+  #sidebar, #right-panel { scrollbar-width: thin; }
+  #sidebar::-webkit-scrollbar, #right-panel::-webkit-scrollbar { width: 6px; }
+  #sidebar::-webkit-scrollbar-thumb, #right-panel::-webkit-scrollbar-thumb {
+    background-color: var(--color-gray-300);
+    border-radius: 3px;
+  }
+  .dark #sidebar::-webkit-scrollbar-thumb, .dark #right-panel::-webkit-scrollbar-thumb {
+    background-color: var(--color-gray-700);
+  }
+</style>

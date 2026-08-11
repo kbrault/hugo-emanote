@@ -1,0 +1,23 @@
+{{- /* Heading scale mirrors the reference theme: uniform semibold
+       weight, hierarchy via size only, h2 keeps a subtle bottom
+       rule as a section-break cue, h5/h6 fade one gray stop each
+       level so they recede without losing hierarchy. */ -}}
+{{- $level := .Level -}}
+{{- $classesByLevel := dict
+  "1" "group mt-10 mb-6 font-semibold text-gray-900 dark:text-gray-50 text-4xl"
+  "2" "group mt-10 mb-5 font-semibold text-gray-900 dark:text-gray-50 pb-1 border-b border-gray-100 dark:border-gray-800 text-3xl"
+  "3" "group mt-8 mb-4 font-semibold text-gray-900 dark:text-gray-50 text-2xl"
+  "4" "group mt-6 mb-3 font-semibold text-gray-900 dark:text-gray-50 text-xl"
+  "5" "group mt-5 mb-2 font-semibold text-gray-800 dark:text-gray-100 text-lg"
+  "6" "group mt-4 mb-2 font-semibold text-gray-700 dark:text-gray-200 text-base"
+-}}
+{{- $class := index $classesByLevel (string $level) -}}
+<h{{ $level }} id="{{ .Anchor }}" class="{{ $class }}">{{ .Text | safeHTML }}<a
+    href="#{{ .Anchor }}"
+    class="ml-2 opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-opacity text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 align-middle"
+    aria-label="Copy link to heading" title="Copy link to heading"><svg
+      class="inline w-[0.7em] h-[0.7em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+    </svg></a></h{{ $level }}>

@@ -1,0 +1,13 @@
+{{ $page := .page }}
+{{ $showTOC := .showTOC }}
+{{ $related := .related }}
+
+<aside id="right-panel" data-focus-hide
+  class="flex-shrink hidden leading-relaxed lg:block lg:sticky lg:top-0 lg:max-h-screen lg:w-52 lg:min-w-52 xl:w-72 xl:min-w-72 bg-gray-50 dark:bg-gray-950 lg:border-l border-gray-200 dark:border-gray-800">
+  <div class="px-4 py-5 text-gray-800 dark:text-gray-200 space-y-8">
+    {{ if $showTOC }}{{ partial "toc.html" $page }}{{ end }}
+    {{ if gt (len $related) 0 }}
+      {{ partial "related-list.html" (dict "page" $page "related" $related "variant" "margin") }}
+    {{ end }}
+  </div>
+</aside>

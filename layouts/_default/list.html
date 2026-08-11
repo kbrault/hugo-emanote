@@ -1,0 +1,6 @@
+{{ define "main" }}
+<article id="note-body" class="max-w-none">
+  {{ with .Content }}{{ . }}{{ end }}
+  {{ partial "page-listing.html" .Pages }}
+</article>
+{{ end }}

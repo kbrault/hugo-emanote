@@ -1,0 +1,57 @@
+{{ $node := .node }}
+{{ $current := .current }}
+{{ $children := $node.Pages }}
+{{ $hasChildren := gt (len $children) 0 }}
+{{ $isActive := eq $node.RelPermalink $current.RelPermalink }}
+
+{{ $nodeSlug := $node.RelPermalink }}
+{{ if not (strings.HasSuffix $nodeSlug "/") }}{{ $nodeSlug = printf "%s/" $nodeSlug }}{{ end }}
+{{ $currentSlug := $current.RelPermalink }}
+{{ if not (strings.HasSuffix $currentSlug "/") }}{{ $currentSlug = printf "%s/" $currentSlug }}{{ end }}
+{{ $isAncestor := and $hasChildren (not $isActive) (strings.HasPrefix $currentSlug $nodeSlug) }}
+{{ $open := or $isActive $isAncestor }}
+
+{{ $linkClass := "hover:bg-primary-50/70 dark:hover:bg-primary-950/50 hover:text-primary-600 dark:hover:text-primary-300 transition-colors" }}
+{{ if $isActive }}
+  {{ $linkClass = "font-semibold tracking-tight bg-primary-50/70 dark:bg-primary-950/50 text-primary-600 dark:text-primary-300 hover:bg-primary-100/80 dark:hover:bg-primary-900/70 transition-colors" }}
+{{ else if $isAncestor }}
+  {{ $linkClass = "font-semibold tracking-tight hover:bg-primary-50/70 dark:hover:bg-primary-950/50 hover:text-primary-600 dark:hover:text-primary-300 transition-colors" }}
+{{ end }}
+
+<div class="pl-2">
+  <div class="flex items-center my-1.5 space-x-2 justify-left">
+    <span class="flex-shrink-0">
+      {{ if $hasChildren }}
+      <button type="button" data-tree-toggle
+        class="w-5 h-5 flex-shrink-0 inline-flex items-center justify-center hover:opacity-70 transition-opacity cursor-pointer"
+        aria-expanded="{{ if $open }}true{{ else }}false{{ end }}" aria-label="Toggle children">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-tree-chevron
+          class="w-4 h-4 text-gray-400 dark:text-gray-500 transition-transform {{ if not $open }}-rotate-90{{ end }}"
+          fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+      {{ else }}
+      <span class="w-5 h-5 flex-shrink-0 inline-flex items-center justify-center" aria-hidden="true">
+        <span class="block w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+      </span>
+      {{ end }}
+    </span>
+    <a class="{{ $linkClass }} rounded-md px-2 py-1 truncate flex-1" title="{{ $node.LinkTitle }}" href="{{ $node.RelPermalink }}">
+      {{ $node.LinkTitle }}
+    </a>
+    {{ if and $hasChildren (not $open) }}
+    <span class="text-xs text-gray-400 dark:text-gray-500 flex-shrink-0" title="{{ len $children }} children inside">
+      {{ len $children }}
+    </span>
+    {{ end }}
+  </div>
+
+  {{ if $hasChildren }}
+  <div class="tree-children {{ if not $open }}hidden{{ end }}">
+    {{ range $children }}
+      {{ partial "sidebar-tree.html" (dict "node" . "current" $current) }}
+    {{ end }}
+  </div>
+  {{ end }}
+</div>

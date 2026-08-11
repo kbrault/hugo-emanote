@@ -1,0 +1,15 @@
+<footer id="site-footer"
+  class="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950 px-5 py-2.5 md:rounded-b-lg flex flex-wrap items-center justify-between gap-x-5 gap-y-1 text-xs text-gray-500 dark:text-gray-400">
+  {{ $link := "hover:text-primary-700 dark:hover:text-primary-300 transition-colors" }}
+  <nav class="flex items-center gap-x-5">
+    <a class="{{ $link }}" href="{{ "/" | relLangURL }}" title="Go to Home">Home</a>
+    {{ with site.GetPage "/tags" }}<a class="{{ $link }}" href="{{ .RelPermalink }}" title="View tags">Tags</a>{{ end }}
+    {{ range site.Menus.footer }}
+    <a class="{{ $link }}" href="{{ .URL | relLangURL }}" title="{{ .Title }}">{{ .Name }}</a>
+    {{ end }}
+  </nav>
+  <a href="https://emanote.srid.ca" target="_blank" title="Design inspired by Emanote"
+    class="flex items-center gap-1.5 opacity-70 hover:opacity-100 transition-opacity">
+    <span>{{ site.Params.footerText | default (printf "Built with Hugo %s" hugo.Version) }} and based on Emanote's theme</span>
+  </a>
+</footer>

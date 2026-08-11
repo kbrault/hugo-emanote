@@ -1,0 +1,13 @@
+<div id="search-modal" data-search-modal hidden
+  class="fixed inset-0 z-50 flex items-start justify-center bg-gray-900/50 dark:bg-black/70 px-4 pt-24">
+  <div class="w-full max-w-lg bg-white dark:bg-gray-900 rounded-lg shadow-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
+    <div class="flex items-center gap-3 px-4 py-3 border-b border-gray-200 dark:border-gray-800">
+      {{ partial "search-icon.html" . }}
+      <input type="text" data-search-input placeholder="Search (Ctrl+K) ..." autocomplete="off"
+        class="flex-1 bg-transparent outline-none text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 font-sans" />
+      <kbd class="hidden sm:inline-block">Esc</kbd>
+    </div>
+    <ul data-search-results class="max-h-80 overflow-y-auto divide-y divide-gray-100 dark:divide-gray-800"></ul>
+    <p data-search-empty class="px-4 py-6 text-sm text-center text-gray-400 dark:text-gray-500 hidden">No results</p>
+  </div>
+</div>

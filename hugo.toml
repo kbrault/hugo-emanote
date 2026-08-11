@@ -1,0 +1,46 @@
+baseURL = "https://example.com/"
+languageCode = "en-us"
+title = "My Notes"
+# theme = "emanote-hugo"
+
+# Enables the built-in JSON output on the home page — the theme's
+# client-side Ctrl+K search reads it from /index.json.
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[params]
+  # Any Tailwind color name: slate, gray, red, orange, amber, yellow,
+  # lime, green, emerald, teal, cyan, sky, blue, indigo, violet,
+  # purple, fuchsia, pink, rose.
+  primaryColor = "blue"
+  description = "An example site built on the Emanote-style Hugo theme."
+  iconUrl = "favicon.svg"
+  relatedCount = 5
+
+  [params.sidebar]
+    enable = true
+  [params.breadcrumbs]
+    enable = true
+  [params.toc]
+    enable = true
+
+[menus]
+  [[menus.footer]]
+    name = "Source"
+    url = "https://github.com/kbrault/hugo-emanote/"
+    weight = 10
+
+[taxonomies]
+  tag = "tags"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+    [markup.goldmark.parser]
+      [markup.goldmark.parser.attribute]
+        block = true
+        title = true
+  [markup.highlight]
+    noClasses = false
+    style = "monokai"
