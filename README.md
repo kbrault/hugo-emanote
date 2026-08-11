@@ -4,6 +4,8 @@ A Hugo theme that reproduces the look & feel of [Emanote](https://emanote.srid.c
 
 This is an independent Hugo templates. It contains none of Emanote's original Haskell/Heist source, only the visual language (layout, spacing, color roles, typography) has been carried over.
 
+Demonstration : [https://kbrault.github.io/hugo-emanote/](https://kbrault.github.io/hugo-emanote/)
+
 ![screenshot](screenshot.png)
 
 ## Quick start
